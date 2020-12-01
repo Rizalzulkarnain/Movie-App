@@ -9,7 +9,7 @@ const Header = () => (
     </RouterLink>
 
     <NavDiv>
-      <RouterLink to="/add-movie">Add Note</RouterLink>
+      <RouterLink to="/add-movie">Add Movie</RouterLink>
     </NavDiv>
 
     <NavDiv>
