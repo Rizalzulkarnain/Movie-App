@@ -1,3 +1,4 @@
+import { produce } from 'immer';
 import * as Constant from '../constants/postsConstants';
 
 const ListPosts = {
@@ -6,97 +7,85 @@ const ListPosts = {
   error: null,
 };
 
-const postListReducer = (state = ListPosts, action) => {
+const postListReducer = produce((draft, action) => {
   switch (action.type) {
     case Constant.POST_LIST_REQUEST:
-      return {
-        loading: true,
-        posts: [],
-        error: null,
-      };
+      draft.loading = true;
+      draft.posts = [];
+      draft.error = null;
+      return;
 
     case Constant.POST_LIST_SUCCESS:
-      return {
-        loading: false,
-        posts: action.payload,
-        error: null,
-      };
+      draft.loading = false;
+      draft.posts = action.payload;
+      draft.error = null;
+      return;
 
     case Constant.POST_LIST_ERROR:
-      return {
-        loading: false,
-        posts: [],
-        error: action.payload,
-      };
+      draft.loading = false;
+      draft.posts = [];
+      draft.error = action.payload;
+      return;
 
     case Constant.CREATE_POST_REQUEST:
-      return {
-        loading: true,
-        posts: [],
-        error: null,
-      };
+      draft.loading = true;
+      draft.posts = [];
+      draft.error = null;
+      return;
 
     case Constant.CREATE_POST_SUCCESS:
-      return {
-        loading: false,
-        posts: [...state.ListPosts, action.payload],
-        error: null,
-      };
+      draft.loading = false;
+      draft.posts = [...draft.ListPosts, action.payload];
+      draft.draft.error = null;
+      return;
 
     case Constant.CREATE_POST_ERROR:
-      return {
-        loading: false,
-        posts: [],
-        error: action.payload,
-      };
+      draft.loading = false;
+      draft.posts = [];
+      draft.error = action.payload;
+      return;
 
     case Constant.DELETE_POST_REQUEST:
-      return {
-        loading: true,
-        posts: [],
-        error: null,
-      };
+      draft.loading = true;
+      draft.posts = [];
+      draft.error = null;
+      return;
 
     case Constant.DELETE_POST_SUCCESS:
-      return {
-        loading: true,
-        posts: state.posts.filter((item) => item.id !== action.payload),
-        error: null,
-      };
+      draft.loading = true;
+      draft.posts = draft.posts.filter((item) => item.id !== action.payload);
+      draft.error = null;
+      return;
 
     case Constant.DELETE_POST_ERROR:
-      return {
-        loading: false,
-        posts: [],
-        error: action.payload,
-      };
+      draft.loading = false;
+      draft.posts = [];
+      draft.draft.error = action.payload;
+      return;
 
     case Constant.EDIT_POST_REQUEST:
-      return {
-        loading: true,
-        posts: [],
-        error: null,
-      };
+      draft.loading = true;
+      draft.posts = [];
+      draft.error = null;
+      return;
 
     case Constant.EDIT_POST_SUCCESS:
-      return {
-        loading: false,
-        posts: state.posts.map((post) =>
-          post.id === action.payload.id ? action.payload : post
-        ),
-        error: null,
-      };
+      draft.loading = false;
+      draft.posts = draft.posts.map((post) =>
+        post.id === action.payload.id ? action.payload : post
+      );
+      draft.draft.error = null;
+      return;
 
     case Constant.EDIT_POST_ERROR:
-      return {
-        loading: false,
-        posts: [],
-        error: action.payload,
-      };
+      draft.loading = false;
+      draft.posts = [];
+      draft.error = action.payload;
+      return;
 
     default:
-      return state;
+      return;
   }
-};
+}, ListPosts);
 
 export default postListReducer;
